@@ -4,6 +4,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+/**
+ * @author Connor Grim
+ */
+
 public class Main {
 
     public static String encodingString;
