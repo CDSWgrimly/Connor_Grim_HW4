@@ -18,41 +18,45 @@ public class MsgTree {
      * @param encodingString
      */
     public MsgTree(String encodingString) {
+        //Check for valid encoding string
         if (encodingString == null || encodingString.length() < 2) {
             return;
         }
+
+        //Creates stack and pushes root node
         Stack<MsgTree> stk = new Stack<>();
         int idx = 0;
         this.payloadChar = encodingString.charAt(idx++);
         stk.push(this);
         MsgTree cur = this;
-        String lastOpt = "in";
+        int lastOpt = 1;
+
+        //Preorder traversal
         while (idx < encodingString.length()) {
             MsgTree node = new MsgTree(encodingString.charAt(idx++));
-            if (lastOpt.equals("in")) {
+            if (lastOpt == 1) {
                 cur.left = node;
                 if (node.payloadChar == '^') {
                     cur = stk.push(node);
-                    lastOpt = "in";
+                    lastOpt = 1;
                 } else {
                     if (!stk.empty())
                         cur = stk.pop();
-                    lastOpt = "out";
+                    lastOpt = 0;
                 }
             } else { // lastOpt is out
                 cur.right = node;
                 if (node.payloadChar == '^') {
                     cur = stk.push(node);
-                    lastOpt = "in";
+                    lastOpt = 1;
                 } else {
                     if (!stk.empty())
                         cur = stk.pop();
-                    lastOpt = "out";
+                    lastOpt = 0;
                 }
             }
         }
     }
-
     /**
      * Constructor for a single node w/ no children
      *
