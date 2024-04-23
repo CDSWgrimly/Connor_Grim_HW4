@@ -56,10 +56,17 @@ public class Main {
         System.out.println("\nStats\n----------\nAverage Bits: " + avgBits + " bits\nTotal Character Count: " + characterCount + "\nTotal Space Saved: " + savedSpace + "%");
     }
 
+    /**
+     * Decodes input codes message given encoding tree
+     *
+     * @param codes
+     * @param msg
+     */
     public static void decode(MsgTree codes, String msg) {
         System.out.println("MESSAGE: ");
         while(index < msg.length()){
             MsgTree cur = codes;
+            //Finds indicating character
             while (cur.left != null && cur.right != null) {
                 if (msg.charAt(index) == '0') {
                     cur = cur.left;
@@ -69,9 +76,11 @@ public class Main {
                     index++;
                 }
             }
+            //Special case for spaces
             if (cur.payloadChar == '\n'){
                 System.out.print("\n");
             }
+            //Otherwise prints payloadChar of node found and increments character count
             else{
                 System.out.print(cur.payloadChar);
                 characterCount++;
